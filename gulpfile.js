@@ -4,7 +4,6 @@ var header = require('gulp-header');
 var cleanCSS = require('gulp-clean-css');
 var rename = require("gulp-rename");
 var uglify = require('gulp-uglify');
-var pug = require('gulp-pug');
 var beautify = require('gulp-html-beautify');
 var pkg = require('./package.json');
 var browserSync = require('browser-sync').create();
@@ -60,9 +59,9 @@ gulp.task('vendor', function() {
 });
 // Compile SCSS
 gulp.task('css:compile', function() {
-  return gulp.src('./scss/**/*.scss')
+  return gulp.src('./scss/sb-admin.scss')
     .pipe(sass.sync({
-      outputStyle: 'expanded'
+      outputStyle: 'compact'
     }).on('error', sass.logError))
     .pipe(gulp.dest('./css'))
 });
@@ -104,7 +103,7 @@ gulp.task('pug', function buildHTML() {
     .pipe(gulp.dest('./'))
     .pipe(browserSync.reload({
       stream: true
-    }))
+    }));
 });
 // Default task
 gulp.task('default', ['css', 'js', 'vendor']);

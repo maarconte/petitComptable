@@ -19,7 +19,7 @@
             color: #fff;
             &:focus,
             &:hover {
-              color: $gray-500;
+              color: $black;
             }
           }
         }
@@ -32,7 +32,7 @@
   @media (min-width: 992px) {
     .navbar-collapse {
       .navbar-sidenav {
-        background: $gradient;
+        background: $indigo;
         li {
           &.active {
             a {
@@ -48,7 +48,7 @@
         > .nav-item {
           .sidenav-second-level,
           .sidenav-third-level {
-            background: $indigo;
+            background: $blue;
           }
         }
       }
@@ -98,7 +98,7 @@
               background-color: $gray-200;
               &:focus,
               &:hover {
-                color: $black;
+                color: $indigo;
               }
             }
           }
@@ -106,7 +106,7 @@
         > .nav-item {
           .sidenav-second-level,
           .sidenav-third-level {
-            background: $gray-100;
+            background: $blue;
           }
         }
       }
@@ -115,5 +115,5 @@
 }
 
 .navbar-dark {
-  background-color: $blue !important;
+  background-color: $gradient !important;
 }

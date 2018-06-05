@@ -1,10 +1,11 @@
 <?php
+session_start();
 include('./functions.php');
-$connexion=signIn(
+$connexion = signIn(
 	$_POST['email'],
 	$_POST['password']
 	);
-if ( $connexion == 1 ) {	
+if ( count($connexion) == 1 ) {	
 	$_SESSION['users'] = $connexion[0];
 	 header('Location: dashboard.php');
 } else {

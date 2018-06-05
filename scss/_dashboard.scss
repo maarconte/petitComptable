@@ -1,8 +1,15 @@
 .account-list {
-    .list-group-item{
-    padding: 0 !important;
+    .card-header {
+        padding: 0;
+        border-bottom: none !important;
     }
-    .add-operation {
-        background-color: $pink;
+  .new-operation {
+    padding: 10px;
+  }
+  .add-operation {
+    background-color: $blue;
+    button {
+      color: #fff;
     }
+  }
 }
