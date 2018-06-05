@@ -3,7 +3,7 @@
 function connexionDb(){
     $dsn = 'mysql:host=localhost;dbname=local';
     $user = 'root';
-    $pass = '';
+    $pass = 'root';
     $pdo = new PDO($dsn, $user, $pass);
     return $pdo;
 }

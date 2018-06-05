@@ -8,7 +8,7 @@
       }
       > .nav-item {
         > .nav-link {
-          color: $gray-600;
+          color: #fff;
           &:hover {
             color: $gray-500;
           }
@@ -16,7 +16,7 @@
         .sidenav-second-level,
         .sidenav-third-level {
           > li > a {
-            color: $gray-600;
+            color: #fff;
             &:focus,
             &:hover {
               color: $gray-500;
@@ -26,18 +26,18 @@
       }
     }
     .navbar-nav > .nav-item.dropdown > .nav-link:after {
-      color: $gray-500;
+      color: #fff;
     }
   }
   @media (min-width: 992px) {
     .navbar-collapse {
       .navbar-sidenav {
-        background: $gray-800;
+        background: $gradient;
         li {
           &.active {
             a {
               color: white !important;
-              background-color: $gray-700;
+              background-color: $blue;
               &:focus,
               &:hover {
                 color: white;
@@ -48,7 +48,7 @@
         > .nav-item {
           .sidenav-second-level,
           .sidenav-third-level {
-            background: $gray-800;
+            background: $indigo;
           }
         }
       }
@@ -112,4 +112,8 @@
       }
     }
   }
+}
+
+.navbar-dark {
+  background-color: $blue !important;
 }

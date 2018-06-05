@@ -19,4 +19,4 @@ $inscription = signUp(
 	$_POST['password']
 	);
 }
-header('Location: signin.php');
+header('Location: signin.html');
