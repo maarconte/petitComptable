@@ -14,7 +14,8 @@ require('./functions.php');
   <!-- Bootstrap core CSS-->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+    crossorigin="anonymous">
   <!-- Page level plugin CSS-->
   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <!-- Custom styles for this template-->
@@ -45,12 +46,20 @@ require('./functions.php');
           <span class="nav-link-text">Mes Comptes</span>
         </a>
         <ul class="sidenav-second-level collapse" id="collapseComponents">
-        <?php $comptes = selectAccount($_SESSION['users']['id']);
+          <?php $comptes = selectAccount($_SESSION['users']['id']);
          foreach($comptes as $compte){ ?>
-          <li>
-            <a href="my-account.php?id=<?= $compte['id'] ?>"><?= $compte['name'] ?></a>
+          <li class="d-flex align-items-center justify-content-between">
+            <a href="my-account.php?id=<?= $compte['id'] ?>">
+              <?= $compte['name'] ?>
+            </a>
+            <form action="deleteComptes.php" method="post">
+              <input type="hidden" name="comptes" value="<?=$$compte['id']?>">
+              <button type="submit" class="confirm mr-3" onclick="confirm()">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </form>
           </li>
-         <?php } ?>
+          <?php } ?>
         </ul>
       </li>
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
@@ -59,7 +68,7 @@ require('./functions.php');
           <span class="nav-link-text">Tables</span>
         </a>
       </li>
-      
+
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
           <i class="fa fa-fw fa-file"></i>

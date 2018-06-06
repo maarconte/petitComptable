@@ -5,7 +5,6 @@ if ( empty($_SESSION['users']) ) {
 	die();
 }
 $deleteOperation = deleteOperation(
-  /*   $_POST['idCompte'], */
     $_POST['id']
 	);
 	header('Location: dashboard.php');

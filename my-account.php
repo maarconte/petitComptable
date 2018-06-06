@@ -57,7 +57,6 @@
                    ?>
                     </td>
                     <td>
-                    <?=$operation['id']?>
                         <form action="deleteOperation.php" method="post">
                           <!--   <input type="hidden" name="idCompte" value="<?=$operation['idCompte']?>"> -->
                             <input type="hidden" name="amount" value="<?=$operation['id']?>">

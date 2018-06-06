@@ -161,6 +161,8 @@ body.sidenav-toggled .navbar-sidenav-tooltip.show { display: flex; }
 
 .navbar-dark { background-color: linear-gradient(135deg, #1A35A9 0%, #4960E8 100%) !important; }
 
+.navbar button { color: #fff !important; }
+
 .card-body-icon { position: absolute; z-index: 0; top: -25px; right: -25px; font-size: 5rem; -webkit-transform: rotate(15deg); -ms-transform: rotate(15deg); transform: rotate(15deg); }
 
 @media (min-width: 576px) { .card-columns { column-count: 1; } }
@@ -194,6 +196,8 @@ footer.sticky-footer { position: absolute; right: 0; bottom: 0; width: 100%; hei
 .btn { border-radius: 50px !important; padding: .375em 15px !important; }
 
 .btn-primary { background-color: #ED8492 !important; border-color: #ED8492 !important; }
+
+button { background-color: inherit; border: none; }
 
 /*============================================= =            Signup                           = =============================================*/
 .bg-gradient { background: linear-gradient(135deg, #1A35A9 0%, #4960E8 100%); }

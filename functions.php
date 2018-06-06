@@ -129,14 +129,16 @@ function selectLastOperation($idCompte){
 
 function deleteOperation($idOp) {
     global $pdo;
-    $request=$pdo->prepare("UPDATE comptes SET comptes.amount = comptes.amount + (
+    $request=$pdo->prepare("UPDATE comptes SET comptes.amount = comptes.amount - (
     SELECT (CASE type WHEN 'credit' THEN o.amount *-1 ELSE o.amount)
-    FROM operations o, comptes c 
-    WHERE o.id = :idOp)
-    WHERE id = :idCompte");
+    FROM operations o, category c 
+    WHERE o.id = :idOp AND o.idCategory = c.id )
+    WHERE comptes.id = o.idCompte ");
         $request->execute([
             ':amount'=> $amount,
-            ':idCompte'=> $idCompte
+            ':idCategory'=> $idCategory,
+            ':idCompte'=> $idCompte,
+            ':idOp' => $idOp
         ]);
  /*    $request=$pdo->prepare('DELETE FROM operations WHERE id = :idOperation ;');
     $request->execute([
