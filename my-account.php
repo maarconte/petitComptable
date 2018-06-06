@@ -12,8 +12,8 @@
                     </div>
                     <div class="col-sm-3 text-right">
                         <p class=" display-4">
-                            <?= $compte[0]['amount']; ?>
-                                <?= $compte[0]['currency']; ?>
+                            <?= $compte[0]['currency']; ?>
+                                <?= $compte[0]['amount']; ?>
                         </p>
                         <span>
                             <?= date("d-m-Y") ;?>
@@ -23,23 +23,51 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                 <?php $operations = selectOperations($_GET['id']); 
                foreach($operations as $operation){ ?>
-               <tr>
-                   <td> <?php $nameCat = selectCategory($operation['idCategory']);
-                   var_dump($nameCat);
-                   ?></td>
-                   <td> <?= $operation['name'] ?></td>
-                   <td> <?= $operation['amount'] ?></td>
-                   <td> <?= $operation['paymentMethod'] ?></td>
-                   <td> <?php $sqlDate= $operation['date'];
+                <tr>
+                    <td>
+                        <?php $cat = selectCategory($operation['idCategory']);?>
+                        <i class="<?php iconCategory($operation['idCategory']) ;?>"></i>
+                        <?= $cat[0]['name'];?>
+                    </td>
+                    <td class="w-50">
+                        <?= $operation['name'] ?>
+                    </td>
+                    <td>
+                        <?php if($cat[0]['type'] == 'debit'){ ?>
+                        <span>-
+                            <?= $operation['amount'] ?>
+                        </span>
+                        <?php } else { ?>
+                        <span class="color-green">+
+                            <?= $operation['amount'] ?>
+                        </span>
+                        <?php } ?>
+
+                    </td>
+                    <td class="text-center">
+                        <i class="<?php iconPaymentMethod($operation['paymentMethod']) ?>"></i>
+                    </td>
+                    <td>
+                        <?php $sqlDate= $operation['date'];
                    $date = strtotime($sqlDate); 
                    echo date("d-m-Y",$date);
-                   ?></td>
-               </tr>
-               
-              <?php }?>
+                   ?>
+                    </td>
+                    <td>
+                    <?=$operation['id']?>
+                        <form action="deleteOperation.php" method="post">
+                          <!--   <input type="hidden" name="idCompte" value="<?=$operation['idCompte']?>"> -->
+                            <input type="hidden" name="amount" value="<?=$operation['id']?>">
+                            <button type="submit" class="confirm" onclick="confirm()">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <?php }?>
             </table>
         </div>
 
@@ -119,4 +147,4 @@
     <script src="js/sb-admin.min.js"></script>
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-charts.min.js"></script>
-</div>
+     </div>

@@ -82,8 +82,20 @@
                       <?= $compte['currency']?>
                   </strong>
                 </p>
-                <small> 13/12/18
-                  <span class="balance-credit">-20€</span>
+                <?php $lastOp = selectLastOperation($compte['id']);
+                      $sqlDate= $lastOp[0]['date'];
+                      $date = strtotime($sqlDate);
+                ?>
+                <small> <?= date("d-m-Y", $date)?>
+                  <span class="balance-credit">
+                  <?php $cat = selectCategory($lastOp[0]['idCategory']);
+                  ?>
+                  <?php if($cat[0]['type'] == 'debit'){ ?>
+                           <span>-<?= $lastOp[0]['amount'] ?></span> 
+                        <?php } else { ?>  
+                            <span class="color-green">+<?= $lastOp[0]['amount'] ?></span> 
+                        <?php } ?>
+                  </span>
                 </small>
               </div>
             </div>
