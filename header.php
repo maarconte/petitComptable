@@ -23,6 +23,9 @@ require('./functions.php');
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
   <link rel="stylesheet" href="./vendor/confirm/msc-style.css">
   <script src="./vendor/confirm/msc-script.js"></script>
+    <!-- Page level plugin CSS-->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+  
 </head>
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
@@ -36,13 +39,13 @@ require('./functions.php');
     <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
         <a class="nav-link" href="dashboard.php">
-          <i class="fa fa-fw fa-dashboard"></i>
+        <i class="fas fa-chart-line"></i>
           <span class="nav-link-text">Dashboard</span>
         </a>
       </li>
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
         <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-          <i class="fa fa-fw fa-wrench"></i>
+        <i class="fas fa-money-check"></i>
           <span class="nav-link-text">Mes Comptes</span>
         </a>
         <ul class="sidenav-second-level collapse" id="collapseComponents">
@@ -52,72 +55,14 @@ require('./functions.php');
             <a href="my-account.php?id=<?= $compte['id'] ?>">
               <?= $compte['name'] ?>
             </a>
-            <form action="deleteComptes.php" method="post">
-              <input type="hidden" name="comptes" value="<?=$$compte['id']?>">
+            <form action="deleteAccount.php" method="post">
+              <input type="hidden" name="compteId" value="<?= $compte['id']?>">
               <button type="submit" class="confirm mr-3" onclick="confirm()">
                 <i class="far fa-trash-alt"></i>
               </button>
             </form>
           </li>
           <?php } ?>
-        </ul>
-      </li>
-      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-        <a class="nav-link" href="tables.html">
-          <i class="fa fa-fw fa-table"></i>
-          <span class="nav-link-text">Tables</span>
-        </a>
-      </li>
-
-      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-          <i class="fa fa-fw fa-file"></i>
-          <span class="nav-link-text">Example Pages</span>
-        </a>
-        <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-          <li>
-            <a href="login.html">Login Page</a>
-          </li>
-          <li>
-            <a href="register.html">Registration Page</a>
-          </li>
-          <li>
-            <a href="forgot-password.html">Forgot Password Page</a>
-          </li>
-          <li>
-            <a href="blank.html">Blank Page</a>
-          </li>
-        </ul>
-      </li>
-      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
-        <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
-          <i class="fa fa-fw fa-sitemap"></i>
-          <span class="nav-link-text">Menu Levels</span>
-        </a>
-        <ul class="sidenav-second-level collapse" id="collapseMulti">
-          <li>
-            <a href="#">Second Level Item</a>
-          </li>
-          <li>
-            <a href="#">Second Level Item</a>
-          </li>
-          <li>
-            <a href="#">Second Level Item</a>
-          </li>
-          <li>
-            <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>
-            <ul class="sidenav-third-level collapse" id="collapseMulti2">
-              <li>
-                <a href="#">Third Level Item</a>
-              </li>
-              <li>
-                <a href="#">Third Level Item</a>
-              </li>
-              <li>
-                <a href="#">Third Level Item</a>
-              </li>
-            </ul>
-          </li>
         </ul>
       </li>
     </ul>

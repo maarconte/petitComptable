@@ -22,8 +22,6 @@ body.signup { height: 100vh; padding-top: 0; margin-bottom: 0; }
 
 .scroll-to-top i { font-weight: 800; }
 
-.row { margin-right: inherit !important; margin-left: inherit !important; }
-
 .smaller { font-size: 0.7rem; }
 
 .o-hidden { overflow: hidden !important; }

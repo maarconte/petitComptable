@@ -79,6 +79,19 @@ function selectAccount($idUser)
     return $request->fetchAll();   
 }
 
+function deleteAccount($id){
+    global $pdo;
+    $request=$pdo->prepare('DELETE FROM operations WHERE idCompte = :id');
+    $request->execute([
+        ':id'=> $id
+    ]); 
+    $request=$pdo->prepare('DELETE FROM comptes WHERE id = :id ');
+    $request->execute([
+        ':id'=> $id
+    ]); 
+
+}
+
  /*=============================================
  =            Operations                       =
  =============================================*/
@@ -127,23 +140,21 @@ function selectLastOperation($idCompte){
     return $request->fetchAll();
 }
 
-function deleteOperation($idOp) {
+function deleteOperation($idOp, $idCo) {
     global $pdo;
-    $request=$pdo->prepare("UPDATE comptes SET comptes.amount = comptes.amount - (
-    SELECT (CASE type WHEN 'credit' THEN o.amount *-1 ELSE o.amount)
-    FROM operations o, category c 
-    WHERE o.id = :idOp AND o.idCategory = c.id )
-    WHERE comptes.id = o.idCompte ");
+    $request=$pdo->prepare(" UPDATE comptes SET comptes.amount = comptes.amount - (
+        SELECT (CASE type WHEN 'debit' THEN o.amount *-1 ELSE o.amount END)
+        FROM operations o, category c 
+        WHERE o.id = :idOp AND o.idCategory = c.id )
+    WHERE comptes.id = :idCo ");
         $request->execute([
-            ':amount'=> $amount,
-            ':idCategory'=> $idCategory,
-            ':idCompte'=> $idCompte,
+            ':idCo'=> $idCo,
             ':idOp' => $idOp
         ]);
- /*    $request=$pdo->prepare('DELETE FROM operations WHERE id = :idOperation ;');
+    $request=$pdo->prepare('DELETE FROM operations WHERE id = :idOp ;');
     $request->execute([
-        ':idOperation'=> $idOperation
-    ]); */
+        ':idOp'=> $idOp
+    ]);
 }
 
 function iconPaymentMethod($payment){

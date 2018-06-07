@@ -4,9 +4,9 @@ if ( empty($_SESSION['users']) ) {
 	header('Location: signin.html');
 	die();
 }
-$deleteOperation = deleteOperation(
-    $_POST['id'],
-    $_POST['idCompte']
+
+$deleteAccount = deleteAccount(
+    $_POST['compteId']
 	);
 	header('Location: dashboard.php');
 ?>
