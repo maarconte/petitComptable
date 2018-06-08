@@ -1,4 +1,9 @@
 // Global styling for this template
+@import url('https://fonts.googleapis.com/css?family=Comfortaa');
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Comfortaa', cursive !important;
+
+}
 
 html {
   position: relative;
@@ -58,4 +63,10 @@ body.signup{
   i {
     font-weight: 800;
   }
+}
+
+.jumbotron {
+  color: #fff;
+  font-family: 'Comfortaa', cursive !important;
+
 }

@@ -54,8 +54,8 @@
   });
 })(jQuery); // End of use strict
 
-function confirm(){
-  mscConfirm("Voulez vous vraiment supprimer cette opération ?",function(){
+function confirm() {
+  mscConfirm('Voulez vous vraiment supprimer cette opération ?', function() {
     alert("L'opération a été supprimée !");
   });
 }

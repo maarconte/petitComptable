@@ -2,7 +2,7 @@
 <div class="content-wrapper">
     <div class="container-fluid pt-5">
         <?php  $compte = selectCompte($_GET['id']);?>
-        <div class="jumbotron jumbotron-fluid">
+        <div class="jumbotron jumbotron-fluid bg-gradient">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-9">
@@ -22,6 +22,47 @@
                 </div>
             </div>
         </div>
+        <div class="card">
+        <div class="card-body">
+            <!-- Operation -->
+            <div id="new-operation-<?= $compte['id']?>" class="new-operation">
+              <form class="form-inline" method="post" action="addOperation.php">
+                <div class="form-group mx-sm-3">
+                  <label for="staticName" class="sr-only">Nom</label>
+                  <input name="name" type="text" class="form-control" id="name" placeholder="Nom">
+                </div>
+                <div class="form-group mx-sm-3">
+                  <label for="staticMontant" class="sr-only">Montant</label>
+                  <input name="amount" type="text" class="form-control" id="amount" placeholder="Montant">
+                </div>
+
+                <div class="form-group mx-sm-3 ">
+                  <select name="idCategory" class="form-control" id="exampleFormControlSelect1">
+                    <?php $cats = selectCategories();
+            foreach($cats as $cat) {
+            ?>
+                    <option value="<?= $cat['id'];?>">
+                      <?= $cat['name'];?>
+                    </option>
+                    <?php } ?>
+                  </select>
+                </div>
+                <div class="form-group mx-sm-3 ">
+                  <select name="paymentMethod" class="form-control" id="exampleFormControlSelect1">
+                    <?php  $pms = get_enum_values('operations','paymentMethod'); 
+          foreach($pms as $pm) {
+          ?>
+                    <option>
+                      <?= $pm; ?>
+                    </option>
+                    <?php } ?>
+                  </select>
+                </div>
+                <input type="hidden" name="idCompte" value="<?= $compte[0]['id']?>">
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+              </form>
+            </div>
+        </div>
         <div class="table-responsive">
             <table class="table table-bordered table-striped" id="dataTable" width="100%" cellspacing="0">
                 <?php $operations = selectOperations($_GET['id']); 
@@ -33,7 +74,17 @@
                         <?= $cat[0]['name'];?>
                     </td>
                     <td class="w-50">
-                        <?= $operation['name'] ?>
+                        <div class="d-flex justify-content-between">
+                            <span id="opName-<?= $operation['id'] ?>"><?= $operation['name'] ?></span> 
+                             <form action="updateOp.php" method="post" class="updateInput">
+                                 <input type="hidden" name="id" value="<?= $operation['id']?>" >
+                                 <input type="text" name="name" value="<?= $operation['name']?>" >
+                                 <button type="submit" class="btn btn-primary">Ok</button>
+                             </form>
+                       <span id="editBtn" onclick="toggleEdit(this, <?= $operation['id'] ?>)">
+                         <i class="fas fa-pencil-alt"></i>
+                       </span>
+                        </div>
                     </td>
                     <td>
                         <?php if($cat[0]['type'] == 'debit'){ ?>
@@ -56,7 +107,7 @@
                    echo date("d-m-Y",$date);
                    ?>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <form action="deleteOperation.php" method="post">
                             <input type="hidden" name="idCompte" value="<?=$operation['idCompte']?>">
                             <input type="hidden" name="id" value="<?=$operation['id']?>">
@@ -70,40 +121,6 @@
             </table>
         </div>
 
-        <!-- Area Chart Example-->
-        <div class="card mb-3">
-            <div class="card-header">
-                <i class="fa fa-area-chart"></i> Area Chart Example</div>
-            <div class="card-body">
-                <canvas id="myAreaChart" width="100%" height="30"></canvas>
-            </div>
-            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-        </div>
-        <div class="row">
-            <div class="col-lg-8">
-                <!-- Example Bar Chart Card-->
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fa fa-bar-chart"></i> Bar Chart Example</div>
-                    <div class="card-body">
-                        <canvas id="myBarChart" width="100" height="50"></canvas>
-                    </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <!-- Example Pie Chart Card-->
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fa fa-pie-chart"></i> Pie Chart Example</div>
-                    <div class="card-body">
-                        <canvas id="myPieChart" width="100%" height="100"></canvas>
-                    </div>
-                    <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- /.container-fluid-->
     <!-- /.content-wrapper-->
     <footer class="sticky-footer">
@@ -136,4 +153,16 @@
         </div>
     </div>
      </div>
+             <!-- Bootstrap core JavaScript-->
+             <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Page level plugin JavaScript-->
+        <script src="vendor/datatables/jquery.dataTables.js"></script>
+        <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin.min.js"></script>
+        <!-- Custom scripts for this page-->
+        <script src="js/sb-admin-datatables.min.js"></script>
      <?php include("footer.php"); ?>

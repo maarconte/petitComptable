@@ -15,8 +15,7 @@ if ( !empty($_POST['name']) AND (!empty($_POST['amount'])) ){
     $_POST['idCompte'],
     $_SESSION['users']['id']
 	);
-	header('Location: dashboard.php');
-	die();
+	header("Location:" . $_SERVER['HTTP_REFERER']);
 }
 else {
 	header('Location: dashboard.php');

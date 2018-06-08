@@ -2,7 +2,7 @@
 require('./functions.php');
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 
 <head>
   <meta charset="utf-8">
@@ -23,13 +23,11 @@ require('./functions.php');
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.0/jquery-confirm.min.css">
   <link rel="stylesheet" href="./vendor/confirm/msc-style.css">
   <script src="./vendor/confirm/msc-script.js"></script>
-    <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   
 </head>
 <!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-  <a class="navbar-brand" href="dashboard.php">Petit comptable</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top conforta" id="mainNav">
+  <a class="navbar-brand " href="dashboard.php">Petit comptable</a>
 
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive"
     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +79,7 @@ require('./functions.php');
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+        <a class="nav-link" href="loggout.php">
           <i class="fa fa-fw fa-sign-out"></i>Logout</a>
       </li>
     </ul>

@@ -14,5 +14,18 @@
 <script src="js/sb-admin-charts.min.js"></script>
 <!-- Custom scripts for this page-->
 <script src="js/sb-admin-datatables.min.js"></script>
+
+<script>
+    function toggleEdit(item, id) {
+        $(item)
+            .prev('.updateInput')
+            .toggle();
+            var title = '#accountName-'+id;
+            $(title).toggle();
+            var opTitle = '#opName-'+id;
+            $(opTitle).toggle();
+    }
+</script>
 </body>
+
 </html>

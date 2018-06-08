@@ -19,7 +19,7 @@ $pdo = connexionDb();
       {
         global $pdo;
           $req = $pdo->prepare('INSERT INTO users ( pseudo, email, password ) 
-              VALUES (:pseudo, :email, :password);');
+              VALUES (:pseudo, :email, AES_ENCRYPT(:password)');
           $req->execute([
               ':pseudo'=> $pseudo,
               ':email'=> $email,
@@ -46,7 +46,17 @@ function signIn($email,$password){
     return $req->fetchAll();
   }
 
- function addAccount( $name, $amount,  $currency, $idUser, $type)
+  function verifyMaxAccount($id){
+    global $pdo;
+    $request=$pdo->prepare('SELECT COUNT(id) as count FROM comptes WHERE idUser = :id');
+    $request->execute([
+        ':id'=> $id
+        ]);
+    return $request->fetchAll()[0]['count'];
+
+  }
+
+ function addAccount( $name, $amount, $currency, $idUser, $type)
 {
     global $pdo;
     $request=$pdo->prepare('INSERT INTO  comptes ( name,amount, currency, idUser, type) 
@@ -92,6 +102,15 @@ function deleteAccount($id){
 
 }
 
+function update($id, $name){
+    global $pdo;
+    $request=$pdo->prepare("UPDATE comptes SET name = :name WHERE id = :id");
+    $request->execute([
+        ':name'=> $name,
+        ':id'=> $id
+        ]);
+}
+
  /*=============================================
  =            Operations                       =
  =============================================*/
@@ -124,7 +143,7 @@ function deleteAccount($id){
 
 function selectOperations($idCompte){
     global $pdo;
-    $request=$pdo->prepare('SELECT * FROM operations WHERE idCompte = :idCompte ;');
+    $request=$pdo->prepare('SELECT * FROM operations WHERE idCompte = :idCompte ORDER BY date DESC ;');
     $request->execute([
         ':idCompte'=> $idCompte
     ]);
@@ -169,6 +188,15 @@ function iconPaymentMethod($payment){
             default : 
             echo "far fa-money-bill-alt";
     }
+}
+
+function updateOp($id, $name){
+    global $pdo;
+    $request=$pdo->prepare("UPDATE operations SET name = :name WHERE id = :id");
+    $request->execute([
+        ':name'=> $name,
+        ':id'=> $id
+        ]);
 }
 
  /*=====  End of Operations                ======*/
@@ -229,19 +257,21 @@ function iconCategory($idCategory) {
             break;
     }
 }
- /*=====  End of Categories                ======*/
+ /*=====  End of Categories  ======*/
 
  /* Selectionner colonne */
 function get_enum_values( $table, $column_name)
 {
     global $pdo;
     // Récupérer la colonne de type ENUM et lui retirer le text 'enum' dans l'objet
-    $result = $pdo->prepare("SELECT SUBSTR(COLUMN_TYPE, 5) FROM INFORMATION_SCHEMA.COLUMNS
+    $result = $pdo->query("SELECT SUBSTR(COLUMN_TYPE, 5) FROM INFORMATION_SCHEMA.COLUMNS
        WHERE TABLE_NAME = '$table' AND COLUMN_NAME = '$column_name'");
-   $result->execute([]);
+   //$result->execute([]);
    // Initialisation d'un tableau
    $row = array();
-   // Récuperer ce qui correspond à mon regex et le rangerr dans un taleau
+   // Récuperer ce qui correspond à mon regex et le ranger dans un taleau
    preg_match_all("/([^'^(^)^,]+)/", $result->fetch()[0],$row);
     return $row[0];
 }
+
+$verifyAccounts = verifyMaxAccount($_SESSION['users']['id']);

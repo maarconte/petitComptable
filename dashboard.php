@@ -1,6 +1,6 @@
 <?php include("header.php"); ?>
 <div class="content-wrapper">
-  <div class="container-fluid pt-5">
+  <div class="container-fluid pt-5 pb-5">
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
       <li class="breadcrumb-item">
@@ -9,9 +9,14 @@
       <li class="breadcrumb-item active">My Dashboard</li>
     </ol>
     <!-- Comptes -->
-    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal">
+    <?php ?>
+    <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#exampleModal" <?php if($verifyAccounts == 10 ){echo 'disabled';} ?> >
       <i class="fas fa-plus-circle"></i> Compte
     </button>
+    <?php 
+   if($verifyAccounts == 10 ){
+       echo 'Vous avez atteint le nombre maximum de comptes';
+   }?>
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -62,17 +67,24 @@
     </div>
     <!-- Modal end -->
     <!-- Account List -->
-    <div class="accordion account-list" id="accordionExample">
-    <?php $comptes = selectAccount($_SESSION['users']['id']);
+    <div class="accordion account-list mb-5" id="accordionExample">
+      <?php $comptes = selectAccount($_SESSION['users']['id']);
          foreach($comptes as $compte){ ?>
       <div class="card mb-2">
-        <div class="card-header" id="headingOne"> 
-            <div class="row">
+        <div class="card-header" id="headingOne">
+          <div class="row" style="margin-left: inherit !important;margin-right: inherit !important;">
             <div class="d-flex col-8 align-items-center">
-              <h5>
+              <h5 id="accountName-<?= $compte['id']?>">
                 <?= $compte['name']?>
               </h5>
-              <i class="ml-2 fas fa-pencil-alt"></i>
+              <form action="updateAccountName.php" method="post" class="ml-2 updateInput">
+                <input type="hidden" name="id" value="<?= $compte['id']?>" >
+                <input type="text" name="name" value="<?= $compte['name']?>" >
+                <button type="submit" class="btn btn-primary">Ok</button>
+              </form>
+                  <span id="editBtn" onclick="toggleEdit(this, <?= $compte['id']?>)">
+                    <i class="ml-2 fas fa-pencil-alt"></i>
+                  </span>
             </div>
             <div class="col-3 pt-2 pb-2 d-flex justify-content-end">
               <div class="text-right">
@@ -83,73 +95,82 @@
                   </strong>
                 </p>
                 <?php $lastOp = selectLastOperation($compte['id']);
-                      $sqlDate= $lastOp[0]['date'];
-                      $date = strtotime($sqlDate);
+                    //  echo count($lastOp);
+                      if(count($lastOp) == 1) {
+                        $sqlDate= $lastOp[0]['date'];
+                        $date = strtotime($sqlDate);
                 ?>
-                <small> <?= date("d-m-Y", $date)?>
-                  <span class="balance-credit">
-                  <?php $cat = selectCategory($lastOp[0]['idCategory']);
-                  ?>
-                  <?php if($cat[0]['type'] == 'debit'){ ?>
-                           <span>-<?= $lastOp[0]['amount'] ?></span> 
-                        <?php } else { ?>  
-                            <span class="color-green">+<?= $lastOp[0]['amount'] ?></span> 
+                  <small>
+                    <?= date("d-m-Y", $date)?>
+                      <span class="balance-credit">
+                        <?php $cat = selectCategory($lastOp[0]['idCategory']);
+                    ?>
+                        <?php if($cat[0]['type'] == 'debit'){ ?>
+                        <span>-
+                          <?= $lastOp[0]['amount'] ?>
+                        </span>
+                        <?php } else { ?>
+                        <span class="color-green">+
+                          <?= $lastOp[0]['amount'] ?>
+                        </span>
                         <?php } ?>
-                  </span>
-                </small>
+                      </span>
+                  </small>
+                        <?php } ?>
               </div>
             </div>
             <div id="add-operation-<?= $compte['id']?>" class="add-operation col-1 d-flex align-items-center justify-content-center">
-            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<?= $compte['id']?>" aria-expanded="true" aria-controls="collapse<?= $compte['id']?>">
-              <i class="fas fa-plus"></i>
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse<?= $compte['id']?>" aria-expanded="true"
+                aria-controls="collapse<?= $compte['id']?>">
+                <i class="fas fa-plus"></i>
               </button>
             </div>
           </div>
-           
-        
+
+
         </div>
 
         <div id="collapse<?= $compte['id']?>" class="collapse hide" aria-labelledby="headingOne" data-parent="#accordionExample">
           <div class="card-body">
-                   <!-- Operation -->
-        <div id="new-operation-<?= $compte['id']?>" class="new-operation">
-        <form class="form-inline" method="post" action="addOperation.php">
-          <div class="form-group mx-sm-3">
-            <label for="staticName" class="sr-only">Nom</label>
-            <input name="name" type="text" class="form-control" id="name" placeholder="Nom">
-          </div>
-          <div class="form-group mx-sm-3">
-            <label for="staticMontant" class="sr-only">Montant</label>
-            <input name="amount" type="text" class="form-control" id="amount" placeholder="Montant">
-          </div>
+            <!-- Operation -->
+            <div id="new-operation-<?= $compte['id']?>" class="new-operation">
+              <form class="form-inline" method="post" action="addOperation.php">
+                <div class="form-group mx-sm-3">
+                  <label for="staticName" class="sr-only">Nom</label>
+                  <input name="name" type="text" class="form-control" id="name" placeholder="Nom">
+                </div>
+                <div class="form-group mx-sm-3">
+                  <label for="staticMontant" class="sr-only">Montant</label>
+                  <input name="amount" type="text" class="form-control" id="amount" placeholder="Montant">
+                </div>
 
-          <div class="form-group mx-sm-3 ">
-            <select name="idCategory" class="form-control" id="exampleFormControlSelect1">
-              <?php $cats = selectCategories();
+                <div class="form-group mx-sm-3 ">
+                  <select name="idCategory" class="form-control" id="exampleFormControlSelect1">
+                    <?php $cats = selectCategories();
             foreach($cats as $cat) {
             ?>
-              <option value="<?= $cat['id'];?>">
-                <?= $cat['name'];?>
-              </option>
-              <?php } ?>
-            </select>
-          </div>
-          <div class="form-group mx-sm-3 ">
-            <select name="paymentMethod" class="form-control" id="exampleFormControlSelect1">
-              <?php  $pms = get_enum_values('operations','paymentMethod'); 
+                    <option value="<?= $cat['id'];?>">
+                      <?= $cat['name'];?>
+                    </option>
+                    <?php } ?>
+                  </select>
+                </div>
+                <div class="form-group mx-sm-3 ">
+                  <select name="paymentMethod" class="form-control" id="exampleFormControlSelect1">
+                    <?php  $pms = get_enum_values('operations','paymentMethod'); 
           foreach($pms as $pm) {
           ?>
-              <option>
-                <?= $pm; ?>
-              </option>
-              <?php } ?>
-            </select>
-          </div>
-          <input type="hidden" name="idCompte" value="<?= $compte['id']?>">
-          <button type="submit" class="btn btn-primary">Ajouter</button>
-        </form>
-      </div>
-      <!-- Operation end -->
+                    <option>
+                      <?= $pm; ?>
+                    </option>
+                    <?php } ?>
+                  </select>
+                </div>
+                <input type="hidden" name="idCompte" value="<?= $compte['id']?>">
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+              </form>
+            </div>
+            <!-- Operation end -->
           </div>
         </div>
       </div>
@@ -190,4 +211,5 @@
       </div>
     </div>
     <?php include("footer.php"); ?>
+
   </div>

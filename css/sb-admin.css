@@ -1,4 +1,7 @@
+@import url("https://fonts.googleapis.com/css?family=Comfortaa");
 .color-green { color: #28a745; }
+
+h1, h2, h3, h4, h5, h6 { font-family: 'Comfortaa', cursive !important; }
 
 html { position: relative; min-height: 100%; }
 
@@ -22,6 +25,8 @@ body.signup { height: 100vh; padding-top: 0; margin-bottom: 0; }
 
 .scroll-to-top i { font-weight: 800; }
 
+.jumbotron { color: #fff; font-family: 'Comfortaa', cursive !important; }
+
 .smaller { font-size: 0.7rem; }
 
 .o-hidden { overflow: hidden !important; }
@@ -29,6 +34,8 @@ body.signup { height: 100vh; padding-top: 0; margin-bottom: 0; }
 .z-0 { z-index: 0; }
 
 .z-1 { z-index: 1; }
+
+.conforta { font-family: 'Comfortaa', cursive !important; }
 
 #mainNav .navbar-collapse { overflow: auto; max-height: 75vh; }
 
@@ -190,6 +197,8 @@ footer.sticky-footer { position: absolute; right: 0; bottom: 0; width: 100%; hei
 .account-list .add-operation { background-color: #1A35A9; }
 
 .account-list .add-operation button { color: #fff; }
+
+.updateInput { display: none; }
 
 .btn { border-radius: 50px !important; padding: .375em 15px !important; }
 

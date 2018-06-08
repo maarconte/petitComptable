@@ -4,7 +4,12 @@ if ( empty($_SESSION['users']) ) {
 	header('Location: signin.html');
 	die();
 }
-if ( !empty($_POST['name']) AND (!empty($_POST['amount'])) ){
+
+$error = false;
+
+$verifyAccounts = verifyMaxAccount($_SESSION['users']['id']);
+
+if ( !empty($_POST['name']) AND (!empty($_POST['amount'])) AND ($verifyAccounts < 10)){
 	$insert_account = addAccount(
 	$_POST['name'],
 	$_POST['amount'],
@@ -12,11 +17,10 @@ if ( !empty($_POST['name']) AND (!empty($_POST['amount'])) ){
 	$_SESSION['users']['id'],
     $_POST['type']
 	);
-	header('Location: dashboard.php');
+	header("Location:" . $_SERVER['HTTP_REFERER']);
 	die();
 }
 else {
-    var_dump('Error');
-	//header('Location: dashboard.php');
+	header("Location:" . $_SERVER['HTTP_REFERER']);
 }
 ?>
